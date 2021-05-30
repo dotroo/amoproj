@@ -1,13 +1,21 @@
 <?php
 
-$json = file_get_contents('php://input');
+include __DIR__ . "logger.php";
 
-if ($json != NULL)
-{
-    echo $json;
+logger("wh request", $_GET);
+
+if (isset($_GET['code'])){
+    $webhookData = [
+        'code' => $_GET['code'],
+        'referer' => $_GET['referer'],
+        'client_id' => $_GET['client_id']
+    ];
+    logger("Webhook data", $webhookData);
+    json_encode($webhookData);
+    file_put_contents("webhook_data.txt", $webhookData);
 }
 else
-{
-    echo "no hook";
-}
+    echo "test config";
+//test
+
 ?>
