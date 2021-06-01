@@ -1,9 +1,9 @@
 <?php
-
-include __DIR__ . "logger.php";
+echo "hui";
+require_once __DIR__ . "/logger.php";
 
 logger("wh request", $_GET);
-
+echo "hui";
 if (isset($_GET['code'])){
     $webhookData = [
         'code' => $_GET['code'],
