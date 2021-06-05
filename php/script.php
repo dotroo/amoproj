@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Output</title>
-    </head>
-    <body>
-        <?php
+<?php
 
-            $request = new ApiRequest($_REQUEST['method'], $_REQUEST['url'], $_REQUEST['data']);        
+    $request = new BaseApiRequest($_REQUEST['method'], $_REQUEST['url'], $_REQUEST['data']);
 
-        ?>
-    </body>
-</html>
+?>
