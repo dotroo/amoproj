@@ -6,10 +6,8 @@
     <body>
         <?php
 
-        $reqMethod = $_REQUEST['method'];
-        $reqURL = $_REQUEST['url'];
+            $request = new ApiRequest($_REQUEST['method'], $_REQUEST['url'], $_REQUEST['data']);        
 
-        echo $reqMethod . ' ' . $reqURL;
         ?>
     </body>
 </html>
