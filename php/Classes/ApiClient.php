@@ -22,7 +22,7 @@ class ApiClient {
     }
 
     public function setExpires($timestamp){
-        this->expires = $timestamp;
+        this->expires = time()+$timestamp;
     }
 
     public function getExpires(){

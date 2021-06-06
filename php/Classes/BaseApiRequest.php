@@ -1,6 +1,6 @@
 <?php 
 
-class ApiRequest {
+class BaseApiRequest {
     protected $url;
     protected $method;
     protected $data;

@@ -18,17 +18,21 @@ $data = [
     'redirect_uri' => "http://0e3f299ae3b7.ngrok.io/php/webhook.php"
 ];
 
-$oauthCodeExchange = new OauthRequest($webhookData['referer'] . "/oauth2/access_token", "POST", $data);
+$oauthCodeExchange = new Classes\OauthRequest($webhookData['referer'] . "/oauth2/access_token", "POST", $data);
 
 $oauthCodeExchange->initRequest();
 
 $response = $oauthCodeExchange->getResponse();
 
-$apiClient = new ApiClient;
+$apiClient = new Classes\ApiClient;
 $apiClient->setAccessToken($response['access_token'])
           ->setRefreshToken($response['refresh_token'])
           ->setExpires($response['expires_in']);
-
-
-          
+$dbData = [
+    'access_token' => $apiClient->getAccessToken(),
+    'refresh_token' => $apiClient->getRefreshToken(),
+    'expires' => $apiClient->getExpires()
+];
+$addDataToDB = new DBRequest("localhost", "root", "", "amocrm-api");
+$addDataToDB->insert("oauth", $dbData);     
 ?>
