@@ -1,5 +1,6 @@
 <?php 
 
+require_once "BaseApiRequest.php";
 class OauthRequest extends BaseApiRequest{
     public function initRequest()
     {
