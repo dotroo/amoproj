@@ -1,5 +1,8 @@
 <?php
 
-    $request = new BaseApiRequest($_REQUEST['method'], $_REQUEST['url'], $_REQUEST['data']);
+require_once "Classes/DBRequest.php";
 
+    $db = new DBRequest('localhost', 'amocrm-api', 'root', '');
+    $result = $db->select('*', 'users');
+    echo var_dump($result);
 ?>
