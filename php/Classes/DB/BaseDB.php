@@ -15,7 +15,7 @@ class BaseDB
     public static function getInstance($host, $db, $charset, $login, $pass) 
     {
         if (self::$instance === NULL) {
-            $opt  = 
+            $opt = 
             [
 				PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
 				PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
