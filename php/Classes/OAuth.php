@@ -1,6 +1,6 @@
 <?php
 
-class ApiClient {
+class Oauth {
     private $access_token;
     private $refresh_token;
     private $expires;

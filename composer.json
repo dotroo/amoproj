@@ -1,0 +1,16 @@
+{
+    "name": "nikitav/amoproj",
+    "description": "amoCRM API project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "dotroo",
+            "email": "vinick96@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Classes\\DB\\": "php/"
+        }
+    }
+}

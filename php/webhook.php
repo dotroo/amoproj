@@ -1,4 +1,8 @@
 <?php
+
+require_once "Classes/OAuth.php";
+require_once "Classes/DBRequest.php";
+
 $secret = "koMh8vMa4MU9aVQOKYgy5DrLM8zYII8QFPqn1DmAN441pGjmhaW3Uw6enXEclOIM";
 $integrationId = "37859936-9fa2-4b88-b4de-a60d75ba7209";
 
@@ -24,7 +28,7 @@ $oauthCodeExchange->initRequest();
 
 $response = $oauthCodeExchange->getResponse();
 
-$apiClient = new Classes\ApiClient;
+$apiClient = new Oauth;
 $apiClient->setAccessToken($response['access_token'])
           ->setRefreshToken($response['refresh_token'])
           ->setExpires($response['expires_in']);
@@ -33,6 +37,6 @@ $dbData = [
     'refresh_token' => $apiClient->getRefreshToken(),
     'expires' => $apiClient->getExpires()
 ];
-$addDataToDB = new DBRequest("localhost", "root", "", "amocrm-api");
-$addDataToDB->insert("oauth", $dbData);     
+//$addDataToDB = new DBRequest("localhost", "root", "", "amocrm-api");
+//$addDataToDB->insert("oauth", $dbData);     
 ?>
