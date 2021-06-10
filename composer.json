@@ -10,7 +10,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "Classes\\DB\\": "php/"
+            "Classes\\API\\": "php/Classes/API",
+            "Classes\\DB\\": "php/Classes/DB"
         }
     }
 }

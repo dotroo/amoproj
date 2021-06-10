@@ -1,8 +1,10 @@
 <?php 
 
-require_once "BaseApiRequest.php";
-class OauthRequest extends BaseApiRequest{
-    public function initRequest()
+namespace Classes\API;
+
+class OauthApiClient 
+{
+    public function getTokenByCode($url, $data)
     {
         $curl = curl_init();
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
@@ -10,7 +12,7 @@ class OauthRequest extends BaseApiRequest{
         curl_setopt($curl,CURLOPT_URL, $url);
         curl_setopt($curl,CURLOPT_HTTPHEADER, ['Content-Type:application/json']);
         curl_setopt($curl,CURLOPT_HEADER, false);
-        curl_setopt($curl,CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($curl,CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, 1);
         curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, 2);
@@ -39,7 +41,7 @@ class OauthRequest extends BaseApiRequest{
         	die('Ошибка: ' . $e->getMessage() . PHP_EOL . 'Код ошибки: ' . $e->getCode());
         }
 
-        $response = json_decode($out, true);
+        return $response = json_decode($out, true);
     }
 }
 

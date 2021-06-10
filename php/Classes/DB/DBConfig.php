@@ -1,5 +1,7 @@
 <?php
 
+namespace Classes\DB;
+
 define("DBHOST", "localhost");
 define("DBNAME", "amocrm-api");
 define("DBLOGIN", "root");

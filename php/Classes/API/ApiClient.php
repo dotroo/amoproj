@@ -1,21 +1,40 @@
 <?php 
 
-class BaseApiRequest {
-    protected $url;
+namespace Classes\API;
+
+class ApiClient {
+    private $access_token;
+    private $refresh_token;
+    private $expires;
+
+    public function setAccessToken($token) {
+        this->access_token = $token;
+    }
+
+    public function getAccessToken() {
+        return this->access_token;
+    }
+
+    public function setRefreshToken($token) {
+        this->refresh_token = $token;
+    }
+
+    public function getRefreshToken() {
+        return this->refresh_token;
+    }
+
+    public function setExpires($timestamp) {
+        this->expires = time()+$timestamp;
+    }
+
+    public function getExpires() {
+        return this->expires;
+    }
+   /* protected $url;
     protected $method;
     protected $data;
     protected $response;
-    protected $headers;
-
-    public function getResponse(){
-        return $this->response;
-    }
-
-    public function __construct($reqUrl, $reqMethod, $reqData){
-        $this->url = $reqUrl;
-        $this->method = $reqMethod;
-        $this->data = $reqData;
-    }
+    protected $headers; */
 
     public function initRequest($userAgent, $headers){
         $curl = curl_init(); //Сохраняем дескриптор сеанса cURL
