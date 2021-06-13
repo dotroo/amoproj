@@ -3,16 +3,16 @@
 namespace Classes\DB;
 use \PDO;
 
-//Singleton pattern DB wrapper
+//Синглтон для коннекта к базе
 
 class BaseDB 
 {
-    protected static $instance; //static instance to store an object
+    protected static $instance; 
 
-    private function __construct() {} //Singleton pattern object should have a single instance therefore can't be created with "new"
-    private function __clone() {} // or cloned
+    private function __construct() {} 
+    private function __clone() {} 
 
-    //creating a BaseDB object instance if it doesn't exist or returning an existing one
+    //Создаем инстанс коннекта, если еще нет, иначе возвращаем его
     public static function getInstance($host, $db, $charset, $login, $pass) 
     {
         if (self::$instance === NULL) {

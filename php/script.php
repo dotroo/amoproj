@@ -1,10 +1,25 @@
 <?php
 
-    /*$db = new DBRequest('localhost', 'amocrm-api', 'root', '');
-    $params = [
-        'login' => 'test'
-    ];
-    $result = $db->select('*', 'users', $params);
-    echo var_dump($result); */
+use Classes\API\ApiClient;
+use Classes\API\OauthApiClient;
+use Classes\DB\OAuthTable;
+
+$apiClient = new ApiClient;
+$getTokenFromDB = new OauthTable;
+
+switch ($_POST['method']) {
+    case "GET":
+        $method = "GET";
+        $apiClient->curlRequest($_POST['url'], );
+        break;
+    case "POST":
+        break;
+    case "PATCH":
+        break;
+    case "DELETE":
+        break;
+    default:
+        break;
+}
     
 ?>

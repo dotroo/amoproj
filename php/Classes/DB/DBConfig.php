@@ -4,6 +4,6 @@ namespace Classes\DB;
 
 define("DBHOST", "localhost");
 define("DBNAME", "amocrm-api");
-define("DBLOGIN", "root");
-define("DBPASS", "");
+define("DBLOGIN", "script");
+define("DBPASS", "phppass");
 define("DBCHARSET", "utf8");

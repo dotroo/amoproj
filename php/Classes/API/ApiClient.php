@@ -6,37 +6,41 @@ class ApiClient {
     private $access_token;
     private $refresh_token;
     private $expires;
+    private $base_domain;
 
     public function setAccessToken($token) {
-        this->access_token = $token;
+        $this->access_token = $token;
     }
 
     public function getAccessToken() {
-        return this->access_token;
+        return $this->access_token;
     }
 
     public function setRefreshToken($token) {
-        this->refresh_token = $token;
+        $this->refresh_token = $token;
     }
 
     public function getRefreshToken() {
-        return this->refresh_token;
+        return $this->refresh_token;
     }
 
     public function setExpires($timestamp) {
-        this->expires = time()+$timestamp;
+        $this->expires = time()+$timestamp;
     }
 
     public function getExpires() {
-        return this->expires;
+        return $this->expires;
     }
-   /* protected $url;
-    protected $method;
-    protected $data;
-    protected $response;
-    protected $headers; */
 
-    public function initRequest($userAgent, $headers){
+    public function setBaseDomain($base_domain) {
+        $this->base_domain = $base_domain;
+    }
+
+    public function getBaseDomain() {
+        return $this->base_domain;
+    }
+
+    public function curlRequest(string $userAgent = "amoCRM-API-client/1.0'", string $url, array $headers, string $method, array $data = []){
         $curl = curl_init(); //Сохраняем дескриптор сеанса cURL
         /** Устанавливаем необходимые опции для сеанса cURL  */
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
@@ -45,13 +49,15 @@ class ApiClient {
         curl_setopt($curl,CURLOPT_HTTPHEADER, $headers);
         curl_setopt($curl,CURLOPT_HEADER, false);
         curl_setopt($curl,CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($data));
+        if ($method === "POST" || $method === "PATCH") {
+            curl_setopt($curl,CURLOPT_POSTFIELDS, json_encode($data));
+        }        
         curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, 1);
         curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, 2);
         $out = curl_exec($curl); //Инициируем запрос к API и сохраняем ответ в переменную
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
-        /** Теперь мы можем обработать ответ, полученный от сервера. Это пример. Вы можете обработать данные своим способом. */
+        /** Теперь мы можем обработать ответ, полученный от сервера. */
         $code = (int)$code;
         $errors = [
         	400 => 'Bad request',
@@ -76,6 +82,7 @@ class ApiClient {
         }
 
         $response = json_decode($out, true);
+        return $response;
     }
 }
 ?>
