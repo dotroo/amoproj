@@ -40,7 +40,7 @@ class ApiClient {
         return $this->base_domain;
     }
 
-    public function curlRequest(string $userAgent = "amoCRM-API-client/1.0'", string $url, array $headers, string $method, array $data = []){
+    public function curlRequest(string $userAgent = "amoCRM-API-client/1.0", string $url, array $headers, string $method, array $data = []){
         $curl = curl_init(); //Сохраняем дескриптор сеанса cURL
         /** Устанавливаем необходимые опции для сеанса cURL  */
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
