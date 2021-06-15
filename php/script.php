@@ -22,38 +22,36 @@ if ($apiClient->getExpires() > time()) {
     $url = $apiClient->getBaseDomain() . '/oauth2/access_token';
     $exchange = $oAuth->getTokenByRefreshToken($apiClient, $url);
     $apiClient->setAccessToken($exchange['access_token'])
-          ->setRefreshToken($exchange['refresh_token'])
-          ->setExpires($exchange['expires']);
+              ->setRefreshToken($exchange['refresh_token'])
+              ->setExpires($exchange['expires']);
     
     /* обновляем данные в таблице */
     $update = "UPDATE OauthKeys SET access_token = :access_token, refresh_token = :refresh_token, expires = :expires WHERE base_domain = :base_domain)";
     $sqlData = [
-        'access_token' => $apiClient->getAccessToken(),
+        'access_token'  => $apiClient->getAccessToken(),
         'refresh_token' => $apiClient->getRefreshToken(),
-        'expires' => $apiClient->getExpires(),
-        'base_domain' => $apiClient->getBaseDomain()
+        'expires'       => $apiClient->getExpires(),
+        'base_domain'   => $apiClient->getBaseDomain()
     ];
     $connect->request($update, $sqlData);
 }
 
+$headers = [ //заголовки для API запросов
+    'Content-Type:application/json',
+    'Authorization: Bearer ' . $apiClient->getAccessToken()
+];
 /* проверяем, что пришло с фронта запросом POST */
 switch ($_POST['method']) {
     case "GET":
-        $method = "GET";
-        $headers = [
-            'Content-Type:application/json',
-            'Authorization: Bearer ' . $apiClient->getAccessToken()
-        ];
-        $apiClient->curlRequest($_POST['url'], $headers, $method);
+        $apiClient->curlRequest($_POST['url'], $headers, $_POST['method']);
         break;
     case "POST":
-        break;
     case "PATCH":
+        $apiClient->curlRequest($_POST['url'], $headers, $_POST['method'], $data);
         break;
     case "DELETE":
         break;
     default:
+        echo "Unsupported method";
         break;
 }
-    
-?>
