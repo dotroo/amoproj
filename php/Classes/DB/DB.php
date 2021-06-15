@@ -23,7 +23,12 @@ class DB
 				\PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
             ];
             try {
-                self::$instance = new \PDO("mysql:host={$dbConf['DBHOST']};dbname={$dbConf['DBNAME']};charset={$dbConf['DBHCHARSET']}", $dbConf['DBLOGIN'], $dbConf['DBPASS'], $opt);
+                self::$instance = new \PDO(
+                    "mysql:host={$dbConf['DBHOST']};dbname={$dbConf['DBNAME']};charset={$dbConf['DBHCHARSET']}",
+                    $dbConf['DBLOGIN'],
+                    $dbConf['DBPASS'],
+                    $opt
+                );
             }
             catch (\PDOException $e) {
                 print "Error!: " . $e->getMessage() . "<br/>";
