@@ -2,29 +2,36 @@
 
 namespace Classes\API;
 
+use Classes\DB\OAuthTable;
+
 class ApiClient {
     private $access_token;
     private $refresh_token;
     private $expires;
     private $base_domain;
 
-    public function setAccessToken($token) {
+    public function setAccessToken(string $token)
+    {
         $this->access_token = $token;
     }
 
-    public function getAccessToken() {
+    public function getAccessToken()
+    {
         return $this->access_token;
     }
 
-    public function setRefreshToken($token) {
+    public function setRefreshToken(string $token)
+    {
         $this->refresh_token = $token;
     }
 
-    public function getRefreshToken() {
+    public function getRefreshToken()
+    {
         return $this->refresh_token;
     }
 
-    public function setExpires($timestamp) {
+    public function setExpires(int $timestamp)
+    {
         $this->expires = time()+$timestamp;
     }
 
@@ -32,15 +39,18 @@ class ApiClient {
         return $this->expires;
     }
 
-    public function setBaseDomain($base_domain) {
+    public function setBaseDomain(string $base_domain)
+    {
         $this->base_domain = $base_domain;
     }
 
-    public function getBaseDomain() {
+    public function getBaseDomain()
+    {
         return $this->base_domain;
     }
 
-    public function curlRequest(string $userAgent = "amoCRM-API-client/1.0", string $url, array $headers, string $method, array $data = []){
+    public function curlRequest(string $url, array $headers, string $method, string $userAgent = "amoCRM-API-client/1.0", array $data = []) :array
+    {
         $curl = curl_init(); //Сохраняем дескриптор сеанса cURL
         /** Устанавливаем необходимые опции для сеанса cURL  */
         curl_setopt($curl,CURLOPT_RETURNTRANSFER, true);
