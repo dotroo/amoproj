@@ -1,5 +1,9 @@
 <?php
 
+if (isset($_GET['referer']) && isset($_GET['state']) && $_GET['state'] === 'state') {
+    setcookie('base_domain', $_GET['referer'], time()+86400*90, '/');    
+}
+
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -12,9 +16,6 @@ use Classes\Logger\Logger;
 
 Logger::$PATH = __DIR__ . "/../logs";
 Logger::getLogger("OAuthTokens")->log("ia rodilsia");
-//function logNikita(string $string): void {
-//    file_put_contents(__DIR__ . "/../logs/name.log", $string . "\n", 8);
-//}
 
 /* получаем данные из конфигурационного файла приложения */
 $appConf = parse_ini_file(__DIR__ . "/../configs/app_config.ini");
@@ -26,9 +27,10 @@ if (isset($_GET['code'])) {
         'code'    => $_GET['code'],
         'referer' => $_GET['referer'],
     ];
-    if (isset($_SERVER['HTTP_REFERER'])) {
-        setcookie('base_domain', $_GET['referer'], time()+86400*90);
-    }
+    // if (isset($_GET['state']) && $_GET['state'] === "state") {
+        // Logger::getLogger("OAuthTokens")->log("setting cookie " . $_GET['referrer']);
+        // setcookie('base_domain', $_GET['referer'], time()+86400*90);
+    // }
 } else {
     Logger::getLogger("hook")->log("nothing here");
 }
@@ -74,7 +76,7 @@ if ($result->fetch() === false) {
     DB::request($insert, $sqlData);
     Logger::getLogger("OAuthTokens")->log("DB insert ok");
 } else { 
-    $update = "UPDATE OAuthKeys SET access_token = :access_token, refresh_token = :refresh_token, expires = :expires WHERE base_domain = :base_domain)";
+    $update = "UPDATE OAuthKeys SET access_token = :access_token, refresh_token = :refresh_token, expires = :expires, client_id = :client_id WHERE base_domain = :base_domain";
     DB::request($update, $sqlData);
     Logger::getLogger("OAuthTokens")->log("DB update ok");
 }

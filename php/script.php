@@ -67,17 +67,16 @@ $headers = [ //заголовки для API запросов
     'Content-Type:application/json',
     'Authorization: Bearer ' . $apiClient->getAccessToken()
 ];
-/* проверяем, что пришло с фронта запросом POST */
+/* собираем запрос */
 $response = '';
 switch ($_POST['method']) {
     case 'GET':
+    case 'DELETE':
         $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $_POST['url'], $headers, $_POST['method']);
         break;
     case 'POST':
     case 'PATCH':
         $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $_POST['url'], $headers, $_POST['method'], json_decode($_POST['body']));
-        break;
-    case 'DELETE':
         break;
     default:
         $response = "Unsupported method";
