@@ -16,7 +16,7 @@ if (!isset($_COOKIE['base_domain'])) {
 </head>
 <body>
     <div id="api_form">
-        <form class='my_form'>
+        <form class="my_form">
             <select name="method" size="1">
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
@@ -25,13 +25,13 @@ if (!isset($_COOKIE['base_domain'])) {
             </select>
             <input name="url" type="text"><br>
             <label>Request body</label><br>
-            <input name="body" type="textarea"><br>
+            <textarea rows="10" cols="70" name="body"></textarea><br>
             <input type="submit" value="Send">
         </form>
         
         <label>Response</label><br>
         <div id="textarea_response"></div>
-            <textarea class='response' name="response" cols="66" rows="10" readonly=true>
+            <textarea class="response" name="response" cols="66" rows="10" readonly=true>
 
             </textarea>
         </div>

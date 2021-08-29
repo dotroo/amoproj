@@ -2,8 +2,6 @@
 
 namespace Classes\API;
 
-include_once '../../../vendor/autoload.php';
-use Classes\Logger\Logger;
 
 class CurlRequest
 {
@@ -23,16 +21,9 @@ class CurlRequest
         }        
         curl_setopt($curl,CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl,CURLOPT_SSL_VERIFYHOST, false);
-        //curl_setopt($curl, CURLOPT_VERBOSE, true);
-        //$stream = fopen('php://temp', 'w+');
-        //curl_setopt($curl, CURLOPT_STDERR, $stream);
         $out = curl_exec($curl); //Инициируем запрос к API и сохраняем ответ в переменную
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $curlError = curl_error($curl);
-        /* логируем запрос */
-        //rewind($stream);
-        //$verboseCurlLog = stream_get_contents($stream);
-        //Logger::getLogger('curl_requests')->log($verboseCurlLog);
         curl_close($curl);
         /** Теперь мы можем обработать ответ, полученный от сервера. */
         $code = (int)$code;
@@ -46,13 +37,13 @@ class CurlRequest
         	503 => 'Service unavailable',
         ];
 
-         try
-         {
-        	/** Если код ответа не успешный - возвращаем сообщение об ошибке  */
-        	if ($code < 200 || $code > 204) {
-        		throw new \Exception($out, $code);
-        	}
-         }
+        try
+        {
+        /** Если код ответа не успешный - возвращаем сообщение об ошибке  */
+            if ($code < 200 || $code > 204) {
+            	throw new \Exception($out, $code);
+            }
+        }
         catch(\Exception $e)
          {
         	 die('Ошибка: ' . $e->getMessage() . PHP_EOL . 'Код ошибки: ' . $e->getCode() . "\n" . $curlError);

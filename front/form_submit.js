@@ -10,7 +10,7 @@ $(document).ready(function(){
             data: dataString,
             success: function(data) {
                 $('.response').html(function(){
-                    return data;
+                    return JSON.stringify(JSON.parse(data),null,2);
                     }
                 )
             }

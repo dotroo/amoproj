@@ -18,10 +18,10 @@ Logger::getLogger("OAuthTokens")->log("ia rodilsia");
 
 /* получаем данные из конфигурационного файла приложения */
 $appConf = parse_ini_file(__DIR__ . "/../configs/app_config.ini");
-Logger::getLogger("OAuthTokens")->log("ia rodilsia2");
+Logger::getLogger("OAuthTokens")->log("config parsed");
 /* Если хук пришел, записываем данные в переменную и выставляем куку base_domain для дальнейшего поиска ключей авторизации в базе */
 if (isset($_GET['code'])) { 
-    Logger::getLogger("OAuthTokens")->log("got code");
+    Logger::getLogger("OAuthTokens")->log("got auth code");
     $webhookData = [
         'code'    => $_GET['code'],
         'referer' => $_GET['referer'],
@@ -44,17 +44,11 @@ $data = [
 
 /* обмениваем код */
 $oAuthClient = new ApiClientController();
-//try 
-//{
-    Logger::getLogger("OAuthTokens")->log("start send hui");
-    $response = $oAuthClient->getTokenByCode($webhookData['referer'] . '/oauth2/access_token', $data);
-    Logger::getLogger("OAuthTokens")->log("Successfully exchanged tokens");
-    Logger::getLogger("OAuthTokens")->log(json_encode($response));
-//}
-//catch (\Exception $e)
-//{
-//    Logger::getLogger("OAuthTokens")->log($e->getMessage());
-//}
+
+Logger::getLogger("OAuthTokens")->log("start send hui");
+$response = $oAuthClient->getTokenByCode($webhookData['referer'] . '/oauth2/access_token', $data);
+Logger::getLogger("OAuthTokens")->log("Successfully exchanged tokens");
+Logger::getLogger("OAuthTokens")->log(json_encode($response));
 
 /* проверяем, есть ли запись в таблице по base_domain */
 $sqlData =
@@ -87,5 +81,5 @@ if ($result->fetch() === false) {
 
 /* Если авторизовались из кнопки, перенаправляем на сайт с формой */
 if ($_GET['state'] === "state") {
-    // header("Location: /front/form.html", true, 301);
+    header("Location: /front/form.php", true, 301);
 }

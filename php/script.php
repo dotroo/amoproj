@@ -45,7 +45,7 @@ if ($apiClient->getExpires() <= time()) {
     
     $apiClient->setAccessToken($exchange['access_token']);
     $apiClient->setRefreshToken($exchange['refresh_token']);
-    $apiClient->setExpires($exchange['expires_in'] ?? 0);
+    $apiClient->setExpires($exchange['expires_in'] + time() ?? time());
     
     Logger::getLogger('OAuthTokens')->log("Exchange ok");
 
@@ -54,7 +54,7 @@ if ($apiClient->getExpires() <= time()) {
     $sqlData = [
         'access_token'  => $apiClient->getAccessToken(),
         'refresh_token' => $apiClient->getRefreshToken(),
-        'expires'       => $apiClient->getExpires() + time(),
+        'expires'       => $apiClient->getExpires(),
         'base_domain'   => $apiClient->getBaseDomain()
     ];
     DB::request($update, $sqlData);
