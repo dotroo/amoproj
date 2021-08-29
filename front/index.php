@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_COOKIE['base_domain'])) {
-    header("Location: /front/form.html", true, 301);
+    header("Location: /front/form.php", true, 301);
     exit();
 } else {
     print('Please, authorize the app<br>
