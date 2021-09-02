@@ -5,7 +5,7 @@ namespace Classes\API;
 
 class CurlRequest
 {
-    public static function curlRequest(string $url, array $headers, string $method, array $data = [], string $userAgent = "amoCRM-API-client/1.0") :array
+    public static function curlRequest(string $url, array $headers, string $method, $data = null, string $userAgent = "amoCRM-API-client/1.0") :array
     {
         $url = "https://" . $url;
         $curl = curl_init(); //Сохраняем дескриптор сеанса cURL
