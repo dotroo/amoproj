@@ -63,24 +63,32 @@ if ($apiClient->getExpires() <= time()) {
 
 }
 
+/* собираем запрос */
 $headers = [ //заголовки для API запросов
     'Content-Type:application/json',
     'Authorization: Bearer ' . $apiClient->getAccessToken()
 ];
-/* собираем запрос */
+
 $response = '';
+$url = '';
+
+if ($_POST['entity'] === "custom") {
+    $url = $_POST['url'];
+} else {
+    $url = $_POST['entity'] . $_POST['params'];
+}
+
 switch ($_POST['method']) {
     case 'GET':
     case 'DELETE':
-        $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $_POST['url'], $headers, $_POST['method']);
+        $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $url, $headers, $_POST['method']);
         break;
     case 'POST':
     case 'PATCH':
-        $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $_POST['url'], $headers, $_POST['method'], json_decode($_POST['body']));
+        $response = CurlRequest::curlRequest($apiClient->getBaseDomain() . $url, $headers, $_POST['method'], json_decode($_POST['body']));
         break;
     default:
         $response = "Unsupported method";
-
 }
 
 /* отправляем ответ на запрос в form_submit.js */
